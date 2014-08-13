@@ -1,4 +1,4 @@
-django_app
+Django App
 ==========
 
-sample django app
+Sample Django App for giggles
