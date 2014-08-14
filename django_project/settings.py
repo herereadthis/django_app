@@ -36,6 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # the polls app
+    # run $ python manage.py sql polls
+    # to see  what SQL Django thinks is required
+    # to create these model tables $ python manage.py syncdb
+    'polls',
 )
 
 MIDDLEWARE_CLASSES = (
