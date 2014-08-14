@@ -35,5 +35,5 @@ class Choice(models.Model):
     # A Field can have optional arguments such setting default to 0.
     votes = models.IntegerField(default=0)
 
-    def __unicode(self):
+    def __unicode__(self):
         return self.choice_text
