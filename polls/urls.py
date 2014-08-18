@@ -4,6 +4,21 @@ from django.conf.urls import patterns, url
 # maps URL patterns (regex) to views
 from polls import views
 
+# Generic view
+urlpatterns = patterns(
+    '',
+    url(r'^$', views.IndexView.as_view(), name='index'),
+    url(r'^(?P<pk>\d+)/$', views.DetailView.as_view(), name='detail'),
+    url(
+        r'^(?P<pk>\d+)/results/$',
+        views.ResultsView.as_view(),
+        name='results'
+    ),
+    url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
+)
+
+'''
+# This is doing the long form way.
 urlpatterns = patterns(
     '',
     # example: /polls/
@@ -21,3 +36,4 @@ urlpatterns = patterns(
     # # example: /polls/5/vote/
     url(r'^(?P<poll_id>\d+)/vote/$', views.vote, name='vote'),
 )
+'''

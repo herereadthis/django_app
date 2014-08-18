@@ -10,9 +10,29 @@
 poll.choice_set.all is the same as python method poll.choice_set.all()
 choice_text is the class variable from the Choice model, which corresponds to
 the database field.
-{% endcomment %}
 <ul>
 {% for choice in poll.choice_set.all %}
     <li>{{ choice.choice_text }}</li>
 {% endfor %}
 </ul>
+{% endcomment %}
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+{% comment %}
+The value of each radio button is assciated with the poll choice's ID.
+The name of each radio button is "choice," so when you submit, it will send
+POST data as choice=# where # is the ID of the selected choice.
+forloop.counter is how many times the for loop has been looping.
+csrf_token prevents Cross Site Request Forgeries
+{% endcomment %}
+<form action="{% url 'polls:vote' poll.id %}" method="post">
+{% csrf_token %}
+{% for choice in poll.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ choice.choice_text }}</label><br />
+{% endfor %}
+<input type="submit" value="Vote" />
+</form>
+
+<p>Keep calm.</p>
