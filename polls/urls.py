@@ -10,6 +10,11 @@ urlpatterns = patterns(
     url(r'^$', views.index, name='index'),
     # example: /polls/5/
     # If the URL matches this, it will run the detail method in views.py
+    # at django_project/urls.py will pass anything that comes after '/polls/*'
+    # then whatever regex matches calls the appropriate view method.
+    # anything inside a parenthesis captures the matching text and sends it as
+    # an argument to view function: ?P<poll_id>
+    # we can use name='detail' to use {% url %} template tag
     url(r'^(?P<poll_id>\d+)/$', views.detail, name='detail'),
     # example: /polls/5/results/
     url(r'^(?P<poll_id>\d+)/results/$', views.results, name='results'),

@@ -15,6 +15,8 @@ urlpatterns = patterns(
     # expression as other arguments.
     # optional - kwargs, which can be passed in a dictionary
     # optional - name - allows you to refer to it unambiguously elseware
-    url(r'^polls/', include('polls.urls')),
     url(r'^admin/', include(admin.site.urls)),
+    # this has no $ end of string character, so it will match "/polls/..."
+    # the remaining text goes to the polls.url URLconf
+    url(r'^polls/', include('polls.urls', namespace='polls')),
 )

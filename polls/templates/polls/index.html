@@ -1,7 +1,18 @@
+{% comment %}
+we could do the URL as href="/polls/{{ poll.id }}/" but that makes this template
+tightyly-coupled, and if we have lots of templates, it would be hard to change
+URLs in the future.
+
+But we defined the name="" argument in the url() fucntion of the the polls.urls
+module, we can just use the {% url %} template tag.
+Remember that that it must be polls.detail because we defined namespace in 
+urls.py. That way, if another app has a detail view, Django will know which
+'detail' to use.
+{% endcomment %}
 {% if latest_poll_list %}
 	<ul>
 		{% for poll in latest_poll_list %}
-			<li><a href="/polls/{{ poll.id }}/">{{ poll.question }}</a></li>
+			<li><a href="{% url 'polls:detail' poll.id %}">{{ poll.question }}</a></li>
 		{% endfor %}
 	</ul>
 {% else %}

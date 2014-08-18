@@ -1,7 +1,7 @@
 # from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse
 # from django.template import RequestContext, loader
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from polls.models import Poll
 
 # In Django, web pages and other content are delivered by views. Each view is
@@ -28,6 +28,10 @@ def index(request):
     objects.
     'latest_poll_list' becomes the variable that you use in the template!
     e.g., {% if latest_poll_list %}
+    - The render() function takes the request object as its first argument, a
+    template name as its second argument, and a dictionary as its optional
+    third argument. It returns an HttpResponse object of the given template
+    with the given context.
     '''
     latest_poll_list = Poll.objects.order_by('-pub_date')[:5]
     context = {'latest_poll_list': latest_poll_list}
@@ -41,11 +45,20 @@ def index(request):
 
 
 def detail(request, poll_id):
-    try:
-        poll = Poll.objects.get(pk=poll_id)
-    except Poll.DoesNotExist:
-        raise Http404
+    '''
+    This view raises the Http404 exception if a poll with the requested ID
+    doesn't exist.
+    long form: from django.http import Http404
+    Short form: get_object_or_404()
+    get_object_or_404() is a shortcut for get and raise Http404
+    '''
+    poll = get_object_or_404(Poll, pk=poll_id)
     return render(request, 'polls/detail.html', {'poll': poll})
+    # try:
+    #     poll = Poll.objects.get(pk=poll_id)
+    # except Poll.DoesNotExist:
+    #     raise Http404
+    # return render(request, 'polls/detail.html', {'poll': poll})
 
 
 def results(request, poll_id):

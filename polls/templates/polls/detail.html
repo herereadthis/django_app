@@ -1,1 +1,18 @@
+{% comment %}
+{# use this if you just want to spit out the poll object #}
+{# it's from the {'poll': poll} dictionary in polls/views.py #}
 {{ poll }}
+{% endcomment %}
+
+<h1>{{ poll.question }}</h1>
+
+{% comment %}
+poll.choice_set.all is the same as python method poll.choice_set.all()
+choice_text is the class variable from the Choice model, which corresponds to
+the database field.
+{% endcomment %}
+<ul>
+{% for choice in poll.choice_set.all %}
+    <li>{{ choice.choice_text }}</li>
+{% endfor %}
+</ul>
